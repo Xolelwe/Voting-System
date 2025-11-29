@@ -1,0 +1,95 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+
+{% block content %}
+<section role="main" class="container">
+    <!-- Back button -->
+    <a href="{% url 'polls:welcome' %}" class="back-btn">⬅ Back to Welcome</a>
+
+    <h2>Vote for Accessibility Priorities</h2>
+
+    <!-- Voice voting button -->
+    <button class="btn" onclick="startVoting()">🎤 Start Voice Voting</button>
+
+    <div class="card-container" aria-live="polite">
+        {% for choice in poll.choice_set.all %}
+        <div class="card" tabindex="0" aria-label="Choice {{ forloop.counter }}: {{ choice.choice_text }}">
+            <h3>{{ choice.choice_text }}</h3>
+            <form method="post" action="{% url 'polls:submit_vote' choice.id %}">
+                {% csrf_token %}
+                <input type="radio" name="vote" value="{{ choice.choice_text }}" style="display:none;">
+                <button class="btn" type="submit" aria-label="Vote for {{ choice.choice_text }}">Vote</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <p><a class="btn" href="{% url 'polls:results' %}">📊 View Results</a></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* -------------------- SPEECH FUNCTIONS -------------------- */
+function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+}
+
+function listen(callback) {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        callback(transcript);
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+        alert("Speech recognition failed: " + event.error);
+    };
+
+    recognition.start();
+}
+
+/* -------------------- VOICE VOTING -------------------- */
+function startVoting() {
+    // Convert Django poll choices to JS array
+    
+
+    function askVote() {
+        speak("Here are the options: " + options.join(", ") + ". Which one do you want to vote for?");
+
+        listen(function(answer){
+            let selected = options.find(opt => answer.includes(opt.toLowerCase()));
+            if(selected){
+                let input = document.querySelector(`input[value='${selected}']`);
+                if(input) input.checked = true;
+
+                speak("You selected " + selected + ". Do you want to vote for another option? Say yes or no.");
+
+                listen(function(next){
+                    if(next.includes("yes")){
+                        askVote(); // repeat for another vote
+                    } else {
+                        // Submit the first form (or modify to submit all)
+                        let form = document.querySelector("form");
+                        if(form) form.submit();
+                        speak("Your vote has been submitted.");
+                    }
+                });
+
+            } else {
+                speak("I did not understand your choice. Please try again.");
+                askVote(); // retry
+            }
+        });
+    }
+
+    askVote();
+}
+</script>
+{% endblock %}

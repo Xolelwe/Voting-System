@@ -1,0 +1,113 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+
+{% block content %}
+<section role="main" class="container">
+    <!-- Back button -->
+    <div class="back-btn-container">
+        <a href="{% url 'polls:welcome' %}" class="back-btn">⬅ Back to Welcome</a>
+    </div>
+
+    <h2>Accessibility Survey</h2>
+
+    <!-- Start voice survey button -->
+    <button type="button" class="btn" onclick="startSurvey()">🎤 Start Voice Survey</button>
+
+    <form method="post" action="{% url 'polls:submit_survey' %}" id="survey-form">
+        {% csrf_token %}
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill" style="width:0%"></div>
+        </div>
+
+        {% for q in questions %}
+        <div class="survey-question">
+            <p>{{ forloop.counter }}. {{ q }}</p>
+            <label><input type="radio" name="q{{ forloop.counter0 }}" value="Yes" required> Yes</label>
+            <label><input type="radio" name="q{{ forloop.counter0 }}" value="No"> No</label>
+            <label><input type="radio" name="q{{ forloop.counter0 }}" value="Partially"> Partially</label>
+        </div>
+        {% endfor %}
+
+        <button class="btn" type="submit">📤 Submit Survey</button>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* -------------------- SPEECH FUNCTIONS -------------------- */
+function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+}
+
+function listen(callback) {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        callback(transcript);
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+        alert("Speech recognition failed: " + event.error);
+    };
+
+    recognition.start();
+}
+
+/* -------------------- VOICE SURVEY -------------------- */
+function startSurvey() {
+    let questions = document.querySelectorAll(".survey-question");
+    let total = questions.length;
+    let current = 0;
+
+    function updateProgress() {
+        let percent = Math.round((current / total) * 100);
+        document.getElementById("progressFill").style.width = percent + "%";
+    }
+
+    function askQuestion() {
+        if (current >= questions.length) {
+            speak("You have completed the survey. Submitting now.");
+            document.getElementById("survey-form").submit();
+            return;
+        }
+
+        let question = questions[current];
+        let questionText = question.querySelector("p").innerText;
+        speak("Question " + (current + 1) + ": " + questionText);
+
+        listen(function(answer) {
+            answer = answer.toLowerCase();
+            let options = question.querySelectorAll("input[type='radio']");
+            let answered = false;
+
+            options.forEach(opt => {
+                if (answer.includes(opt.value.toLowerCase())) {
+                    opt.checked = true;
+                    speak("You selected " + opt.value);
+                    answered = true;
+                }
+            });
+
+            if (!answered) {
+                speak("I did not understand. Please say Yes, No, or Partially.");
+                askQuestion(); // retry same question
+                return;
+            }
+
+            current++;
+            updateProgress();
+            askQuestion(); // next question
+        });
+    }
+
+    askQuestion();
+}
+</script>
+{% endblock %}
