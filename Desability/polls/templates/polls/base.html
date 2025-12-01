@@ -24,9 +24,15 @@
     {% block content %}{% endblock %}
   </main>
 
- footer>
+ <footer>
         <p style="text-align:center; padding:15px; background:#eee;">
-            &copy; Created by Xolelwe, Nongcebo, Asemahle, Wendy - GirlCode-2025
+        <div class="actions">
+        <a class="btn" href="{% url 'polls:vote' %}">🗳️ Vote Now</a>
+        <a class="btn" href="{% url 'polls:survey' %}">📝 Take Survey</a>
+        <a class="btn" href="{% url 'polls:results' %}">📊 View Results</a>
+        <!-- Voice control button -->
+        <button class="btn" onclick="startVoiceMenu()">🎤 Start Voice Control</button>
+    </div>
         </p>
     </footer>
 </body>
