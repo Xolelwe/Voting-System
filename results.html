@@ -1,0 +1,25 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+{% block content %}
+  <section role="main" class="container">
+
+    <h2>Results</h2>
+
+    <ul class="results-list" aria-live="polite">
+      {% for choice in choices %}
+        <li>
+          <strong>{{ choice.choice_text }}</strong>: {{ choice.votes }} votes
+        </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Survey responses (latest)</h3>
+    <ul>
+      {% for s in surveys %}
+        <li>{{ s.created }}: {{ s.answers }}</li>
+      {% empty %}
+        <li>No survey data yet.</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}
