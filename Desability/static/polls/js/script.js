@@ -60,3 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+const messages = [
+    "Your voice matters! 🌟",
+    "Make school better for everyone! 🎒",
+    "Every choice counts! 🚀",
+    "Together we can create change! ✨",
+    "Accessibility is a right! 💙"
+];
+
+let msgIndex = 0;
+let charIndex = 0;
+let element = document.getElementById("animated-quote");
+
+function typeMessage() {
+    let message = messages[msgIndex];
+
+    element.innerHTML = message.substring(0, charIndex) +
+        "<span class='cursor'></span>";
+
+    if (charIndex < message.length) {
+        charIndex++;
+        setTimeout(typeMessage, 80);
+    } else {
+        setTimeout(() => {
+            charIndex = 0;
+            msgIndex = (msgIndex + 1) % messages.length;
+            typeMessage();
+        }, 1500);
+    }
+}
+
+typeMessage();

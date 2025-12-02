@@ -13,7 +13,8 @@
         {% for choice in poll.choice_set.all %}
         <div class="card" tabindex="0" aria-label="Choice {{ forloop.counter }}: {{ choice.choice_text }}">
             <h3>{{ choice.choice_text }}</h3>
-            <form method="post" action="{% url 'polls:submit_vote' choice.id %}">
+           
+
                 {% csrf_token %}
                 <input type="radio" name="vote" value="{{ choice.choice_text }}" style="display:none;">
                 <button class="btn" type="submit" aria-label="Vote for {{ choice.choice_text }}">Vote</button>

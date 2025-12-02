@@ -1,40 +1,292 @@
-/* static/polls/css/styles.css */
-body { font-family: Arial, sans-serif; background:#f7fbff; color:#0b1220; margin:0; line-height:1.5; }
-.accessibility-toolbar { background:#123; color:#fff; padding:12px; text-align:center; }
-.accessibility-toolbar button { margin:6px; padding:8px 14px; border-radius:6px; border:none; cursor:pointer; }
-header { background:#0ea5e9; color:white; padding:18px; text-align:center; }
-.container { max-width:1000px; margin:0 auto; padding:16px; }
-.btn { background:#004080; color:white; padding:12px 18px; border-radius:8px; text-decoration:none; display:inline-block; border:none; cursor:pointer; }
-.card-container { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; padding:12px; }
-.card { background:white; padding:14px; border-radius:10px; width:260px; box-shadow:0 2px 6px rgba(0,0,0,0.08); cursor:default; }
-.card:focus { outline:3px solid #0ea5e9; }
+/* ================================
+   ACCESSIBILITY TOOLBAR
+================================ */
+.accessibility-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 0;
+    background: #0ea5e9; /* bright school blue */
+    border-bottom: 4px solid #004080;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Buttons */
+.accessibility-toolbar button {
+    background: #ffffff;
+    color: #004080;
+    border: 2px solid #004080;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Hover (child friendly pop effect) */
+.accessibility-toolbar button:hover {
+    background: #ffcc00;
+    transform: translateY(-2px);
+}
+
+/* Active press */
+.accessibility-toolbar button:active {
+    transform: translateY(1px);
+}
+
+/* Focus outline (important for accessibility) */
+.accessibility-toolbar button:focus {
+    outline: 3px dashed #ff6f61;
+    outline-offset: 2px;
+}
+
+/* Audio toggle ON state */
+#audioToggle.active {
+    background: #ff6f61;
+    color: white;
+    border-color: #ff6f61;
+}
+
+/* Mobile responsive */
+@media (max-width: 650px) {
+    .accessibility-toolbar {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .accessibility-toolbar button {
+        flex: 1 1 calc(50% - 10px);
+        text-align: center;
+    }
+}
+
+header { background:#0ea5e9; 
+    color:white; 
+    padding:18px; 
+    text-align:center; }
+
+.container { max-width:1000px;
+    margin: top 0;
+    padding:10px;}
+
+.btn { background:#004080; 
+    color:white;
+    padding:12px 18px;
+    border-radius:8px; 
+    text-decoration:none; 
+    display:inline-block; 
+    border:none; 
+    cursor:pointer; }
+
+/* QUOTE CONTAINER */
+.quote-box {
+    background: #fff7cc;                /* soft pastel yellow */
+    border-left: 8px solid #ff6f61;     /* coral red */
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: "Comic Sans MS", sans-serif;
+    text-align: center;
+    animation: fadeIn 1.3s ease-in-out;
+}
+
+/* QUOTE TEXT */
+.quote-text {
+    color: #333;
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.5;
+    animation: popIn 0.9s ease-in-out;
+}
+
+/* AUTHOR */
+.quote-author {
+    font-size: 1.1rem;
+    color: #ff6f61;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0%   { transform: scale(0.8); opacity: 0; }
+    80%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* OPTIONAL GLOW EFFECT */
+.glow {
+    animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+    0%   { text-shadow: 0 0 5px #ffb347; }
+    50%  { text-shadow: 0 0 20px #ff6f61; }
+    100% { text-shadow: 0 0 5px #ffb347; }
+}
+    
+/* ================================
+   VOTE PAGE STYLING
+================================ */
+
+/* Page container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Heading */
+.container h2 {
+    color: #004080;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: #ffcc00;
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 12px;
+}
+
+/* Card container */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+/* Individual card */
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 3px solid #0ea5e9;
+    transition: 0.25s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Card hover animation */
+.card:hover {
+    transform: translateY(-6px);
+    background: #f0faff;
+    border-color: #004080;
+}
+
+/* Card title */
+.card h3 {
+    color: #004080;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+/* Vote button */
+.btn {
+    background: #0ea5e9;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+/* Hover effect */
+.btn:hover {
+    background: #ff6f61;
+    transform: translateY(-2px);
+}
+
+/* Active press */
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* Keyboard focus */
+.card:focus,
+.btn:focus {
+    outline: 3px dashed #ffcc00;
+    outline-offset: 4px;
+}
+
+/* Results link button */
+a.btn {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+}
+
+/* Mobile 🟡 */
+@media (max-width: 650px) {
+    .container h2 {
+        font-size: 1.6rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 8px 14px;
+    }
+}
+
 .high-contrast { background:black; color:yellow; }
 .high-contrast .btn { background:yellow; color:black; }
 #welcome-page {
     width: 70%;
 }
 
-.welcome-image {
-    width: 50%;
-    height:  300px;
-    display: block;
-}
-#welcome-page {
-    max-width: 100px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    text-align: center;
+
+/* -------------------- RESULTS LIST -------------------- */
+.results-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
 }
 
+.results-list li {
+    background: #FFF1C1; /* light yellow */
+    border: 2px solid #FFD93D;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, background 0.2s;
+}
 
-.results-list { list-style:none; padding:0; }
-.results-list li { background:white; margin:8px 0; padding:12px; border-radius:8px; }
-.survey-question { background:white; padding:10px; margin-bottom:10px; border-radius:8px; }
-.progress-bar { background:#e5e7eb; border-radius:10px; overflow:hidden; margin:0.5rem 0; height:20px; }
-.progress-fill { background:#0ea5e9; height:100%; width:0%; transition:width .4s ease; }
+.results-list li:hover {
+    transform: scale(1.03);
+    background: #FFE29D; /* slightly brighter on hover */
+}
+
+/* -------------------- SURVEY RESPONSES -------------------- */
+ul li {
+    background: #E0F7FA; /* light cyan */
+    border: 2px solid #4DD0E1;
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 1em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 @media (max-width:768px) {
   .card { width:100%; }
 }
@@ -59,5 +311,203 @@ header { background:#0ea5e9; color:white; padding:18px; text-align:center; }
 button:focus,
 a:focus {
     outline: 5px solid #ffcc00;
+}
+
+/* Make the existing welcome-page use the image as background */
+#welcome-page {
+    height: 100vh;
+    background-image: url('/static/polls/images/welcome.jpg');
+    background-size: cover;
+    background-position: stretch;
+    background-repeat: repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Center content */
+.welcome-content {
+    text-align: center;
+    z-index: 2;
+}
+
+/* Fun fact styling */
+.child-fact {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #004080;
+    margin-bottom: 15px;
+    display: inline-block;
+    font-size: 1.1rem;
+}
+
+/* Child quote */
+.child-quote {
+    background: rgba(0, 128, 255, 0.65);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-style: italic;
+    display: inline-block;
+}
+
+footer {
+    background-color: #0ea5e9;
+    border-top: 4px solid #004080;
+    padding: 8px 0 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;   /* Makes footer responsive */
+    padding-bottom: 5px;
+}
+
+.footer-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #004080;
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;           /* Space between icon + text */
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.footer-container a:hover {
+    background-color: #003366;
+}
+
+.footer-bottom {
+    color: white;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* Make header sit at the VERY top */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Full-screen hero background */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url('/static/your_image.jpg'); /* update with your image path */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark overlay for better text visibility */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* Centered text content */
+.hero-content {
+    position: relative;
+    color: white;
+    text-align: center;
+    max-width: 700px;
+    padding: 20px;
+}
+
+/* Title styling */
+.site-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Fun fact */
+.child-fact {
+    background: rgba(255, 255, 255, 0.8);
+    color: #004080;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+/* Quote */
+.child-quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    background: rgba(0, 128, 255, 0.6);
+    padding: 12px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 10px;
+    color: #fff;
+}
+
+/* -------------------- SURVEY QUESTIONS -------------------- */
+.survey-question {
+    background: #FFFAF0;
+    border: 2px solid #FFD93D;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.survey-question p {
+    font-size: 1.2em;
+    color: #FF6B6B;
+    margin-bottom: 10px;
+}
+
+.survey-question label {
+    display: block;
+    margin: 5px 0;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #FFD93D; /* makes radio button yellow */
+}
+
+/* -------------------- PROGRESS BAR -------------------- */
+.progress-bar {
+    width: 100%;
+    background: #FFE0B2;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    height: 25px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #FF6B6B, #FFD93D);
+    border-radius: 12px 0 0 12px;
+    transition: width 0.3s ease-in-out;
 }
 

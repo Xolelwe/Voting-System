@@ -2,17 +2,29 @@
 {% load static %}
 
 {% block content %}
-<div id="welcome-page">
-    <img src="{% static 'polls/images/welcome.jpg' %}" 
-         alt="Welcome image showing learners" class="welcome-image">
 
-    <h2>Welcome!</h2>
-    <p>This system helps South African learners including those with disabilities 
-       to vote on educational issues like safety and accessibility.</p>
+<div id="welcome-page">
+
+    <!-- Background image moved into CSS — no more <img> tag -->
+
+    <div class="welcome-content">
+        <p class="child-fact">
+            🇿🇦 Fun Fact: South Africa has <strong>11 official languages</strong> — 
+            one of the highest in the world!
+        </p>
+
+        <p class="child-quote">
+            “Every child’s voice matters. Your vote helps shape tomorrow.” 🌟
+        </p>
+    </div>
+
 </div>
+
 {% endblock %}
 
 {% block scripts %}
+
+
 <script>
 /* -------------------- SPEECH FUNCTIONS -------------------- */
 function speak(text) {

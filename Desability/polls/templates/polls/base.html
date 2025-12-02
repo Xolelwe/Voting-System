@@ -2,29 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Accessible Voting System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Voting System</title>
 
-  <link rel="stylesheet" href="{% static 'polls/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/css/styles.css' %}">
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="header-inner container">
-    <h1 id="site-title">Accessible Voting & Survey System</h1>
-
-    <nav>
-      <a class="btn" href="{% url 'polls:welcome' %}">Home</a>
-      <a class="btn" href="{% url 'polls:vote' %}">🗳️ Vote Now</a>
-      <a class="btn" href="{% url 'polls:survey' %}">📝 Take Survey</a>
-      <a class="btn" href="{% url 'polls:results' %}">📊 View Results</a>
-       <!-- Voice control button -->
-      <button class="btn" onclick="startVoiceMenu()">🎤 Start Voice Control</button>
-    </nav>
-  </div>
-
-  <!-- Accessibility toolbar -->
+<!-- 🔵 TOP ACCESSIBILITY BAR -->
+ <!-- Accessibility toolbar -->
 <div class="accessibility-toolbar" role="toolbar" aria-label="Accessibility toolbar">
   <button onclick="toggleContrast()" aria-pressed="false">High contrast</button>
   <button onclick="increaseFont()">A+</button>
@@ -32,26 +20,56 @@
   <button id="audioToggle" onclick="toggleAudio()">🔊 Audio</button>
 </div>
 </header>
+<!-- 🔵 PAGE HEADER -->
+<header class="main-header">
+    <h1>Accessible Voting & Survey System</h1>
+</header>
 
-<main class="container" role="main">
-  {% block content %}
-  {% endblock %}
+<!-- ✨ ANIMATED QUOTE -->
+<div class="quote-box">
+    <span id="animated-quote"></span>
+</div>
 
-  </div>
+<div class="quote-box">
+    <div class="quote-text glow">
+        "Be brave. Be kind. Be you!"
+    </div>
+    <div class="quote-author">
+        – School Inspiration
+    </div>
+</div>
+
+
+<!-- 🌟 MAIN PAGE CONTENT -->
+<main class="content">
+    {% block content %}
+    {% endblock %}
 </main>
 
+<!-- 🔵 FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
 
-<footer class="site-footer">
-  <div class="footer-text">
-    Created by Xolewe, Nongcebo, Wendy, Asemahle | GirlCode Project
-  </div>
+        <a href="{% url 'polls:welcome' %}">
+            🏠 Home
+        </a>
 
-  
+        <a href="{% url 'polls:vote' %}">
+            🗳️ Vote Now
+        </a>
 
+        <a href="{% url 'polls:survey' %}">
+            📋 Take Survey
+        </a>
+
+        <a href="{% url 'polls:results' %}">
+            📊 View Results
+        </a>
+    </div>
+
+    <p class="footer-bottom">© 2025 Accessible Voting System</p>
 </footer>
 
 <script src="{% static 'polls/js/script.js' %}" defer></script>
 </body>
 </html>
-
-
