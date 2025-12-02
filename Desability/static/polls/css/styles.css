@@ -56,3 +56,8 @@ header { background:#0ea5e9; color:white; padding:18px; text-align:center; }
     background-color: #1f4dab;
 }
 
+button:focus,
+a:focus {
+    outline: 5px solid #ffcc00;
+}
+

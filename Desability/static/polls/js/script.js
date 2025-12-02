@@ -24,9 +24,10 @@ function toggleContrast() {
 function increaseFont() {
   document.documentElement.style.fontSize = '120%';
 }
-function decreaseFont() {
-  document.documentElement.style.fontSize = '100%';
-}
+  
+  function toggleLargeText() {
+      document.body.classList.toggle("large-text");
+  }
 
 // Announce headings & buttons when they get focus
 document.addEventListener('focusin', (e) => {
