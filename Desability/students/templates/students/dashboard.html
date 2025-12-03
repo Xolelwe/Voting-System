@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f3;
+            padding: 30px;
+        }
+        .dash-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 600px;
+            margin: auto;
+            text-align: center;
+            box-shadow: 0 0 10px #ccc;
+        }
+        a.btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        a.logout {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dash-box">
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+    <p>You are logged in. Choose an action:</p>
+
+    <a href="/polls/" class="btn">Start Voting</a>
+    <a href="/students/logout/" class="btn logout">Logout</a>
+</div>
+
+</body>
+</html>
