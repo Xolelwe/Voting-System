@@ -52,3 +52,6 @@ def results(request):
     choices = poll.choice_set.all()
     surveys = SurveyResponse.objects.order_by('-created')[:20]
     return render(request, 'polls/results.html', {'poll': poll, 'choices': choices, 'surveys': surveys})
+
+def welcome(request):
+    return render(request, 'polls/welcome.html')
