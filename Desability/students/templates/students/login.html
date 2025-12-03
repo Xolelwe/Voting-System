@@ -1,20 +1,31 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Student Login</title>
+   
     <style>
         body {
-            font-family: Arial;
-            background: #f0f0f0;
-            padding: 40px;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            font-family: Arial, sans-serif;
         }
         .login-box {
             width: 400px;
-            margin: auto;
+            margin: 100px auto;
             background: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px #ccc;
+            display: flex;
+            flex-direction: column;
+            font-size: 16px;
+            color: #333;
+        }
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
         }
         input {
             width: 100%;
@@ -33,7 +44,10 @@
             font-size: 18px;
             border-radius: 5px;
         }
-        .error { color: red; margin-top: 10px; }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>

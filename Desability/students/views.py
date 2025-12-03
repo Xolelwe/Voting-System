@@ -28,3 +28,7 @@ def student_dashboard(request):
 def student_logout(request):
     logout(request)
     return redirect("student_login")
+
+def student_logout(request):
+    logout(request)
+    return render(request, "students/logged_out.html")

@@ -17,6 +17,8 @@ Including another URLconf
 # avsite/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,5 +36,15 @@ from rest_framework_simplejwt.views import (
 urlpatterns += [
     path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+]
+
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('polls/', include('polls.urls')),  # ← ADD THIS
+    path('api/', include('api.urls')),
+    path('users/', include('users.urls')),
+    path('students/', include('students.urls')),
 ]
 
